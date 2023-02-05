@@ -1,0 +1,13 @@
+site_name: wok_site
+
+site_dir: 'wiki'
+
+dev_addr:
+  127.0.0.1:8200
+
+nav:
+  - index: index.md
+  - pip: pip.md
+  - dev-idea: dev.md
+  - help: help.md
+  - process: process.md
