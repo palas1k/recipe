@@ -27,6 +27,10 @@ https://www.psycopg.org/psycopg3/docs/basic/install.html
 
 pip install Pillow  
 for working with images  
-https://pypi.org/project/Pillow/  
+https://pypi.org/project/Pillow/
+
+pip install django-ckeditor  
+интерфейс ввода текста  
+https://django-ckeditor.readthedocs.io/en/latest/  
 
 
