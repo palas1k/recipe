@@ -3,5 +3,6 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('', index),
+    path('posts/<int:pk>/', PostsList.as_view(), name = 'posts'),
+    
 ]
