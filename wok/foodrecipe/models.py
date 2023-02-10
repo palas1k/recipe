@@ -21,7 +21,7 @@ class Post(models.Model):
     group = models.ForeignKey('Group', verbose_name= 'Group of food', on_delete= models.SET_NULL, null = True)
     author = models.ForeignKey(User, on_delete= models.SET_NULL, null=True)
     #comments = models.ManyToManyField()
-    reply = models.ForeignKey('self', null = True, related_name= 'reply_ok', on_delete= models.CASCADE)
+    reply = models.ForeignKey('self', null = True, related_name= 'reply_ok', on_delete= models.CASCADE, blank=True)
     likes = models.ManyToManyField(User, related_name='postcomments', blank= True)
     #views =
 

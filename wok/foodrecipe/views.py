@@ -6,6 +6,6 @@ from foodrecipe.models import Post
 
 class PostsList(ListView):
     model = Post
-    #template_name =
+    template_name = 'foodrecipe/index.html'
     context_object_name = 'foodrecipe_post_posts'
 
