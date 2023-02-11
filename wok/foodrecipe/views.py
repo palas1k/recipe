@@ -1,5 +1,7 @@
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
+from foodrecipe.forms import AddPost
 from foodrecipe.models import Post
 
 
@@ -12,3 +14,14 @@ class PostsList(ListView):
     #def get_queryset(self):
     #    user = get_object_or_404(User, username = self.kwargs.get('username'))
     #    return Post.objects.filter(author = user).order_by('-date_created')
+
+
+def addpage(request):
+    if request.method == 'POST':
+        form = AddPost(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    else:
+        form =AddPost()
+    return render(request, 'foodrecipe/addpage.html', {'form' : form, 'title': 'Добавление статьи'})

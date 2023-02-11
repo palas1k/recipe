@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+
+<form action="{% url 'add_post' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>

@@ -10,7 +10,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100, help_text='Не более 100 символов', verbose_name='Заголовок')
     slug = models.SlugField(max_length=100)
     content = models.TextField()
-    image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name='Картинка')
+    image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name='Картинка', blank=True)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name= 'Дата создания')
     date_updated = models.DateTimeField(auto_now= True, verbose_name='Дата изменения')
     moderated = models.BooleanField(default=False, verbose_name= 'Проверено модерацией')
