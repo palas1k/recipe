@@ -5,8 +5,8 @@ from django.urls import reverse
 
 class Post(models.Model):
     class Meta:
-        verbose_name = 'Создать пост'
-        verbose_name_plural = 'Создать посты'
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
     title = models.CharField(max_length=100, help_text='Не более 100 символов', verbose_name='Заголовок')
     slug = models.SlugField(max_length=100)
     content = models.TextField()
@@ -16,9 +16,9 @@ class Post(models.Model):
     moderated = models.BooleanField(default=False, verbose_name= 'Проверено модерацией')
     is_published = models.BooleanField(default=True, verbose_name= 'Опубликовано')
     draft = models.BooleanField(default=True, verbose_name='Черновик')
-    ingredients = models.ForeignKey('Ing', on_delete= models.SET_NULL, verbose_name= 'Ингридиенты', null=True)
-    type = models.ForeignKey('Type', verbose_name='Food type', on_delete= models.SET_NULL, null=True)
-    group = models.ForeignKey('Group', verbose_name= 'Group of food', on_delete= models.SET_NULL, null = True)
+    ingredients = models.ManyToManyField('Ing',verbose_name= 'Ингридиенты')
+    type = models.ForeignKey('Type', verbose_name='Категория', on_delete= models.SET_NULL, null=True)
+    group = models.ForeignKey('Group', verbose_name= 'Group of food', on_delete= models.SET_NULL, null = True, blank= True)
     author = models.ForeignKey(User, on_delete= models.SET_NULL, null=True)
     #comments = models.ManyToManyField()
     reply = models.ForeignKey('self', null = True, related_name= 'reply_ok', on_delete= models.CASCADE, blank=True)

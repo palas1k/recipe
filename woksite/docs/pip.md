@@ -34,3 +34,4 @@ pip install django-ckeditor
 https://django-ckeditor.readthedocs.io/en/latest/  
 
 
+
