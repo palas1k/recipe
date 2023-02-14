@@ -132,8 +132,8 @@ STATIC_URL = 'static/'
 #collectstatic path
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATIC_FILES_DIRS = [
-    os.path.join(BASE_DIR, "other_static"),
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'other_static/'),
 ]
 
 STATICFILES_FINDERS = [

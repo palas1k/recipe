@@ -1,7 +1,10 @@
+{% include '_navbar.html' %}
 
 {% for p in foodrecipe_post_posts %}
   {{ p.title }}
 
 {{ p.content }}
-{{ p.image }}
+{% if p.image %}
+        <p><img class="img-article-left thumb" src="{{ p.image.url }}"></p>
+{% endif %}
 {% endfor %}

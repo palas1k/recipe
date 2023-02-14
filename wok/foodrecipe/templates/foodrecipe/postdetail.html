@@ -1,0 +1,7 @@
+{% include '_navbar.html' %}
+
+{{ foodrecipe_post_viewpost.title }}
+{% if foodrecipe_post_viewpost.image %}
+        <p><img class="img-article-left thumb" src="{{ foodrecipe_post_viewpost.image.url }}"></p>
+{% endif %}
+{{ foodrecipe_post_viewpost.content }}
