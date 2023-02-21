@@ -9,7 +9,7 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
     title = models.CharField(max_length=100, help_text='Не более 100 символов', verbose_name='Заголовок')
     slug = models.SlugField(max_length=100)
-    content = models.TextField()
+    content = models.ForeignKey('PostContent', on_delete= models.CASCADE)
     image = models.ForeignKey('PostImage', verbose_name='Изображение', on_delete= models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name= 'Дата создания')
     date_updated = models.DateTimeField(auto_now= True, verbose_name='Дата изменения')
@@ -88,4 +88,16 @@ class PostImage(models.Model):
         verbose_name_plural = 'Изображения'
 
 class PostContent(models.Model):
-    
+    #first content block and other in post create
+    stage1 = models.TextField(max_length=500, verbose_name= 'Шаг 1')
+    stage2 = models.TextField(max_length=500, verbose_name='Шаг 2', null = True)
+    stage3 = models.TextField(max_length=500, verbose_name='Шаг 3', null = True)
+    stage4 = models.TextField(max_length=500, verbose_name='Шаг 4', null = True)
+    stage5 = models.TextField(max_length=500, verbose_name='Шаг 5', null = True)
+    stage6 = models.TextField(max_length=500, verbose_name='Шаг 6', null = True)
+    stage7 = models.TextField(max_length=500, verbose_name='Шаг 7', null = True)
+    stage8 = models.TextField(max_length=500, verbose_name='Шаг 8', null = True)
+    stage9 = models.TextField(max_length=500, verbose_name='Шаг 9', null = True)
+    stage10 = models.TextField(max_length=500, verbose_name='Шаг 10', null = True)
+
+
