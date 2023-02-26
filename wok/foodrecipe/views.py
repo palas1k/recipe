@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 
-from foodrecipe.forms import AddPost
+from foodrecipe.forms import *
 from foodrecipe.models import Post
 
 
@@ -18,7 +18,7 @@ class PostsList(ListView):
     #    return Post.objects.filter(author = user).order_by('-date_created')
 
 class CreatePost(CreateView):
-    form_class = AddPost
+    form_class = PostFormset
     template_name = 'foodrecipe/addpage.html'
     success_url = reverse_lazy('home')
 
