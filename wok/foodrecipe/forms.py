@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import BaseInlineFormSet, inlineformset_factory
+from django.forms import modelformset_factory
 from .models import *
 
 
@@ -18,8 +18,8 @@ from .models import *
 class AddContent(forms.ModelForm):
     class Meta:
         model = PostContent
-        fields = ['text', 'image']
-
-
-PostFormset = inlineformset_factory(Post, PostContent, formset=BaseInlineFormSet, extra=2, fields= ['text', 'image'])
-PostFormset.save()
+        fields = ('image', 'text')
+#
+#
+PostFormset = modelformset_factory(Post, extra=3, fields=('title',))
+# PostFormset.save()

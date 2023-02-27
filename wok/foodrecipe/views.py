@@ -18,9 +18,10 @@ class PostsList(ListView):
     #    return Post.objects.filter(author = user).order_by('-date_created')
 
 class CreatePost(CreateView):
+    #model = PostContent
     form_class = PostFormset
     template_name = 'foodrecipe/addpage.html'
-    success_url = reverse_lazy('home')
+    success_url = 'home'
 
 
 
