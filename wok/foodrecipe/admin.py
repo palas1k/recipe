@@ -22,3 +22,7 @@ class TypeAdmin(admin.ModelAdmin):
 class GroupAdmin(admin.ModelAdmin):
     list_display = ['food_group']
     prepopulated_fields = {"slug": ("food_group",)}
+
+@admin.register(PostContent)
+class PostContentAdmin(admin.ModelAdmin):
+    list_display = ['text']

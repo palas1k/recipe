@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-
-<form action="{% "></form>
-
 <form action="{% url 'add_post' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+<!--    {{ form.as_p }}-->
+    {% for form in formset %}
+    <ul>
+        <li>{{ form.text }}</li>
+        <li>{{ form.image }}</li>
+<!--        <li>{{ form.type }}</li>-->
+    </ul>
+    {% endfor %}
     <button type="submit">Добавить</button>
 </form>
