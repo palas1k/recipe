@@ -90,6 +90,9 @@ class Group(models.Model):
 class PostContent(models.Model):
     text = models.TextField(max_length=500)
     image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name='Картинка', blank=True)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete= models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 

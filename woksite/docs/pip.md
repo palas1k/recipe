@@ -33,5 +33,9 @@ pip install django-ckeditor
 интерфейс ввода текста  
 https://django-ckeditor.readthedocs.io/en/latest/  
 
+pip install django-crispy-forms  
+forms  
+https://django-crispy-forms.readthedocs.io/en/latest/install.html  
+
 
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'ckeditor',
     'foodrecipe.apps.FoodrecipeConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,5 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
     },
 }
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
