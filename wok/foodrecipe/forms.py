@@ -18,9 +18,8 @@ from .models import *
 #             'content':forms.TextInput(attrs={'cols': 100, 'rows':20}),
 #         }
 #
-# class AddContent(ModelForm):
-#     class Meta:
-#         model = PostContent
-#         fields = ['text', 'image']
-
-PostContentFormset = inlineformset_factory(Post, PostContent, fields= ('text', 'image'), extra= 3)
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
+PostContentFormset = inlineformset_factory(Post, PostContent, fields= ('text','image'), extra= 3, can_delete= False)

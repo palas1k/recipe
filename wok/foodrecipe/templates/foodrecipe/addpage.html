@@ -1,16 +1,16 @@
-<!DOCTYPE html>
-{% load crispy_forms_tags %}
-<form action="{% url 'add_post' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% for form in post_content_formset %}
-    <ul>
-        <li>{{ form.text }}</li>
-        <li>{{ form.image }}</li>
-        <li>{{ form.type }}</li>
-    </ul>
-    {% endfor %}
-    <button type="submit">Добавить</button>
+<!--<!DOCTYPE html>-->
+<!--{% load crispy_forms_tags %}-->
+<!--<form action="{% url 'add_post' %}" method="post" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.as_p }}-->
+<!--    {% for form in post_content_form %}-->
+<!--    <ul>-->
+<!--        <li>{{ form.text }}</li>-->
+<!--        <li>{{ form.image }}</li>-->
+<!--        <li>{{ form.type }}</li>-->
+<!--    </ul>-->
+<!--    {% endfor %}-->
+<!--    <button type="submit">Добавить</button>-->
 <!--</form>-->
 <!--<form action="{% url 'add_post' %}" method="post">-->
 <!--    {% csrf_token %}-->
@@ -32,3 +32,53 @@
 <!--{% endfor %}-->
 <!--    <button type="submit">Добавить</button>-->
 <!--    </form>-->
+
+    <!DOCTYPE html>
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Multiformset Demo</title>-->
+<!--    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>-->
+<!--    <script src="{{ STATIC_URL }}js/jquery.formset.js"></script>-->
+<!--    <script type="text/javascript">-->
+<!--        $(function() {-->
+<!--            $(".inline.{{ post_content_form.prefix }}").formset({-->
+<!--                prefix: "{{ post_content_form.prefix }}",-->
+<!--            })-->
+<!--        })-->
+<!--    </script>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--    <div>-->
+<!--        <h1>Add Recipe</h1>-->
+<!--        <form action="." method="post" enctype="multipart/form-data">-->
+<!--            {% csrf_token %}-->
+<!--            <div>-->
+<!--                {{ form.as_p }}-->
+<!--            </div>-->
+<!--            <fieldset>-->
+<!--                <legend>Post Content</legend>-->
+<!--                {{ post_content_form.management_form }}-->
+<!--                {{ post_content_form.non_form_errors }}-->
+<!--                {% for form in post_content_form %}-->
+<!--                    {{ form.text }}-->
+<!--                    {{ form.image }}-->
+<!--                    <div class="inline {{ post_content_form.prefix }}">-->
+<!--                        {{ form.description.errors }}-->
+<!--                        {{ form.description.label_tag }}-->
+<!--                        {{ form.description }}-->
+<!--                    </div>-->
+<!--                {% endfor %}-->
+<!--            </fieldset>-->
+<!--            <input type="submit" value="Create Post" class="submit" />-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+<form action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ post_content_form.as_p }}
+    <input type="submit" value="Submit">
+</form>
