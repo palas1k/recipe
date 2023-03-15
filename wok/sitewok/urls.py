@@ -21,6 +21,8 @@ from foodrecipe.views import *
 
 urlpatterns = [
     path('admin', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
+    path('profile/', include('userprofile.urls')),
     path('', include('foodrecipe.urls')),
 ]
 

@@ -37,5 +37,9 @@ pip install django-crispy-forms
 forms  
 https://django-crispy-forms.readthedocs.io/en/latest/install.html  
 
+pip install django-allauth  
+регистрация  
+https://django-allauth.readthedocs.io/en/latest/installation.html  
+
 
 

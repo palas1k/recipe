@@ -25,6 +25,10 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name='postcomments', blank= True)
     #views =
 
+    # для получения контента связанного с постом
+    def get_all_postcontent(self):
+        return PostContent.objects.filter(post = self.pk)
+
     def likes_count(self):
         return self.likes.count()
 

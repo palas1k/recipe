@@ -42,5 +42,15 @@ class CreatePost(CreateView):
         post_content_form.save()
         return HttpResponseRedirect(reverse('home'))
 
+class PostView(DetailView):
+    model = Post
+    template_name = 'foodrecipe/postdetail.html'
+    context_object_name = 'post'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['post_content'] = PostContent.objects.filter(post_id = Post.id)
+
+
 
 
