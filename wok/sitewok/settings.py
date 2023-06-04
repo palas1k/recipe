@@ -43,8 +43,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'debug_toolbar',
     'ckeditor',
-    'foodrecipe.apps.FoodrecipeConfig',
+
+    'post_create.apps.FoodrecipeConfig',
     'userprofile.apps.UserprofileConfig',
+    'follow_likes_bms.apps.FollowLikesBmsConfig',
+    'comments_answers.apps.CommentsAnswersConfig',
+
     'crispy_forms',
 ]
 

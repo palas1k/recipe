@@ -17,13 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from foodrecipe.views import *
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('userprofile.urls')),
-    path('', include('foodrecipe.urls')),
+    path('', include('post_create.urls')),
 ]
 
 if settings.DEBUG:
