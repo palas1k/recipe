@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from follow_likes_bms.models import Like
+from follow_likes_bms.models import Like, Follower
 from userprofile.models import Profile
 
 
@@ -14,3 +14,6 @@ class ProfileAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     """Лайки"""
     list_display = ['user', ]
+
+
+admin.site.register(Follower)
