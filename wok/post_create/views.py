@@ -5,6 +5,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from .forms import *
 from .models import Post
+from django.http import HttpResponse
 
 
 class PostsList(ListView):
