@@ -1,7 +1,0 @@
-{% include '_navbar.html' %}
-{% block content %}
-<h3>Добро пожаловать {{ profile.user.username }}</h3>
-{% if profile.avatar %}
-<p><img src="{{ profile.avatar.url }}"></p>
-{% endif %}
-{% endblock content %}

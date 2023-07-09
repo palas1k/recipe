@@ -2,10 +2,21 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from .forms import *
 from .models import Post
-from django.http import HttpResponse
+from .serializers import AllPostsSerializer, PostSerializer
+from .pagination import Pagination
+from .filters import PostFilterSet
 
 
 class PostsList(ListView):
@@ -52,3 +63,25 @@ class PostView(DetailView):
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['post_content'] = PostContent.objects.filter(post_id = Post.id)
+
+
+# class PostsAPIView(ListAPIView):
+#     serializer_class = PostSerializer
+#     queryset = Post.objects.all()
+#
+class PostRetrieveAPIView(APIView):
+    serializer_class = PostSerializer
+
+
+class AllPostsAPIView(APIView):
+    """Все посты"""
+    serializer_class = AllPostsSerializer
+    pagination_class = Pagination
+
+    @extend_schema(parameters=[OpenApiParameter('page', int), OpenApiParameter('title', str)])
+    def get(self, request):
+        paginator = Pagination()
+        posts = Post.objects.all().select_related('author', 'type', 'group').order_by('-date_created')
+        filtered_qs = posts.filter(title__icontains=request.GET.get('title', ''))
+        paginated_qs = paginator.paginate_queryset(filtered_qs, request)
+        return paginator.get_paginated_response(AllPostsSerializer(paginated_qs, many=True).data)

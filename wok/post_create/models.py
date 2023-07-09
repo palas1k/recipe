@@ -106,7 +106,7 @@ class PostContent(models.Model):
     '''Контентная часть поста'''
     text = models.TextField(max_length=500)
     image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name='Картинка', blank=True)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='post')
 
     def __str__(self):
         return self.text

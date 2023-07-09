@@ -1,0 +1,10 @@
+{% include '_navbar.html' %}
+<h3>Профиль {{ profile.user.username }}</h3>
+{% if profile.avatar %}
+<p><img src="{{ profile.avatar.url }}"></p>
+{% endif %}
+
+
+<a href="{% url 'follow' profile.user.pk %}" class="btn btn-secondary btn-lg enabled" role="button"
+   aria-disabled="true">Подписаться</a>
+

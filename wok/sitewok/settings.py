@@ -28,8 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,18 +36,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+]
+
+THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'debug_toolbar',
     'ckeditor',
+    'drf_spectacular',
+    'rest_framework',
+    'django_filters',
+]
 
+PROJECT_APPS = [
     'post_create.apps.FoodrecipeConfig',
     'userprofile.apps.UserprofileConfig',
     'follow_likes_bms.apps.FollowLikesBmsConfig',
     'comments_answers.apps.CommentsAnswersConfig',
+]
 
-    'crispy_forms',
+INSTALLED_APPS = [
+    *DJANGO_APPS,
+    *THIRD_PARTY_APPS,
+    *PROJECT_APPS,
 ]
 
 MIDDLEWARE = [
@@ -168,4 +179,13 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+}

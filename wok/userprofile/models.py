@@ -8,7 +8,7 @@ from django.urls import reverse
 
 class Profile(models.Model):
     """Модель профиля пользователя"""
-    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE, related_name='profileuser')
     avatar = models.ImageField('Аватар', upload_to='profile/', blank=True, null=True,
                                validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png'])])
 

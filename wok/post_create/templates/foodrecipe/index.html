@@ -10,10 +10,10 @@
 <!--{% endfor %}-->
 {% for p in foodrecipe_post_posts %}
 {{ p.title }}
-{% for content in p.postcontent_set.all %}
+{% for content in p.postcontent.all %}
 {{ content.text }}
 {% if content.image %}
-        <p><img class="img-article-left thumb" src="{{ content.image.url }}"></p>
+<p><img class="img-article-left thumb" src="{{ content.image.url }}"></p>
 {% endif %}
 {% endfor %}
 {% endfor %}
