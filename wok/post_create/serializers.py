@@ -1,16 +1,15 @@
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rest_framework.serializers import ModelSerializer, CharField
+from rest_framework.serializers import ModelSerializer, CharField, RelatedField
 
 from .models import Post, PostContent
-from userprofile.serializers import UserSerializer
 
 
 class PostContentSerializer(ModelSerializer):
     class Meta:
         model = PostContent
-        fields = '__all__'
+        fields = ('text','image')
 
 
 class PostSerializer(ModelSerializer):
@@ -30,3 +29,11 @@ class AllPostsSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = ('title', 'date_updated', 'author_name', 'food_type', 'food_group')
+
+class CreatePostSerializer(ModelSerializer):
+    post_content = PostContentSerializer(read_only=False, many= True)
+
+    class Meta:
+        model = Post
+        fields = ('title', 'post_content')
+

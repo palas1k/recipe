@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,9 +15,9 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from .forms import *
 from .models import Post
-from .serializers import AllPostsSerializer, PostSerializer
+from .serializers import AllPostsSerializer, PostSerializer, CreatePostSerializer, PostContentSerializer
 from .pagination import Pagination
-from .filters import PostFilterSet
+from .permissions import IsAdminAuthenticatedReadOnly, IsAdminOnly
 
 
 class PostsList(ListView):
@@ -71,6 +72,33 @@ class PostView(DetailView):
 #
 class PostRetrieveAPIView(APIView):
     serializer_class = PostSerializer
+    permission_classes = (IsAdminAuthenticatedReadOnly,)
+
+    def get(self, request, pk):
+        post= Post.objects.get(pk=pk)
+        return Response(PostSerializer(post).data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return Response(status=status.HTTP_200_OK)
+        # if post.author == self.request.user:
+        #     post.delete()
+        #     return Response('Пост удален', status=status.HTTP_200_OK)
+        # else:
+        #     return Response('Нет прав на удаление поста', status= status.HTTP_403_FORBIDDEN)
+
+    # def get_object(self, pk):
+    #     return Post.objects.get(pk=pk)
+
+    def patch(self, request, pk):
+        # post = self.get_object(pk)
+        post = get_object_or_404(Post, pk=pk)
+        serializer = PostSerializer(instance=post, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
 class AllPostsAPIView(APIView):
@@ -85,3 +113,17 @@ class AllPostsAPIView(APIView):
         filtered_qs = posts.filter(title__icontains=request.GET.get('title', ''))
         paginated_qs = paginator.paginate_queryset(filtered_qs, request)
         return paginator.get_paginated_response(AllPostsSerializer(paginated_qs, many=True).data)
+
+class CreatePostAPIView(APIView):
+    serializer_class = CreatePostSerializer
+    permission_classes = (IsAdminOnly,)
+    def post(self, request):
+        data = Post.objects.create(title = request.data["title"])
+        contents = request.data['post_content']
+        for content in contents:
+            PostContent.objects.create(
+                post_id = data.id,
+                text = content['text'],
+                image = content['image'],
+            )
+        return Response(PostSerializer(data).data, status=status.HTTP_201_CREATED)

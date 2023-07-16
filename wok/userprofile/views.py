@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView
 
 from follow_likes_bms.models import Follower
 from userprofile.models import Profile
@@ -62,16 +62,16 @@ class MyProfileAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ChangePasswordView(UpdateAPIView):
+class ChangePasswordView(APIView):
     serializer_class = ChangePasswordSerializer
     model = User
     permission_classes = (IsAuthenticated,)
 
-    def get_object(self, queryset=None):
+    def get_object(self):
         obj = self.request.user
         return obj
 
-    def update(self, request, *args, **kwargs):
+    def post(self, request):
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
 
@@ -87,6 +87,19 @@ class ChangePasswordView(UpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SignUpView(CreateAPIView):
+class SignUpView(APIView):
     model = Profile
     serializer_class = SignUpSerializer
+
+    def post(self, request):
+        serializer = SignUpSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = User(username = serializer.data.get('username'))
+        user.set_password(serializer.validated_data.get('password'))
+        user.save()
+        # Profile.objects.create(
+        #     user = user,
+        #     avatar = serializer.data.get('avatar'),
+        # )
+
+        return Response(status=status.HTTP_201_CREATED)
