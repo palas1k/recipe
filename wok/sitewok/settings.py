@@ -112,8 +112,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wokproject',
-        'USER': 'wokadmin',
-        'PASSWORD': 'password',
+        'USER': 'postgres',
+        'PASSWORD': 'Password',
         'HOST': 'localhost',
         'PORT': '',
     },

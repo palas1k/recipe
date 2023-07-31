@@ -10,8 +10,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profile/', include('userprofile.urls')),
     path('', include('post_create.urls')),
-    path('api/v1/profile/', include('userprofile.urls')),
-    path('api/v1/', include('post_create.urls')),
+    path('api/v1/profile/', include('userprofile.urls'), name='profile'),
+    path('api/v1/', include('post_create.urls'), name='postcreate'),
     path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v1/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]

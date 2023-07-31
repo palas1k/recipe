@@ -7,7 +7,7 @@ from .views import ProfileAPIView, MyProfileAPIView, SignUpView, ChangePasswordV
 
 urlpatterns = [
     # path('<int:pk>/', ProfileDetail.as_view(), name='profile-view'),
-    path('auth/', include('rest_framework.urls')),
+    path('auth/', include('rest_framework.urls'), name='drf-auth'),
     path('<int:pk>/follow/', follow, name='follow'),
     path('<int:pk>/', ProfileAPIView.as_view(), name='profile'),
     path('me/', MyProfileAPIView.as_view(), name='my-profile'),

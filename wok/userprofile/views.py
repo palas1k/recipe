@@ -50,7 +50,7 @@ class MyProfileAPIView(APIView):
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request):
-        profile = get_object_or_404(Profile, pk=request.user.pk)
+        profile = get_object_or_404(User, pk=request.user.pk)
         profile.delete()
         return Response(status=status.HTTP_200_OK)
 
@@ -94,7 +94,7 @@ class SignUpView(APIView):
     def post(self, request):
         serializer = SignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = User(username = serializer.data.get('username'))
+        user = User(username=serializer.data.get('username'))
         user.set_password(serializer.validated_data.get('password'))
         user.save()
         # Profile.objects.create(
