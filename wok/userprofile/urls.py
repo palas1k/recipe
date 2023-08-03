@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from follow_likes_bms.views import follow
-from userprofile.views import ProfileDetail
+# from userprofile.views import ProfileDetail
 
 from .views import ProfileAPIView, MyProfileAPIView, SignUpView, ChangePasswordView
 

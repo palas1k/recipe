@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rest_framework.serializers import ModelSerializer, Serializer, ValidationError
+from rest_framework.serializers import ModelSerializer, Serializer, ValidationError, CharField
 
 from userprofile.models import Profile
 
@@ -13,7 +13,7 @@ class UserSerializer(ModelSerializer):
 
 
 class ProfileSerializer(ModelSerializer):
-    user = UserSerializer()
+    user = CharField(source='user.username')
 
     class Meta:
         model = Profile
@@ -27,10 +27,6 @@ class ChangePasswordSerializer(Serializer):
 
 
 class SignUpSerializer(Serializer):
-    '''
-    вылетает ошибка 500 но работает
-    '''
-    # avatar = serializers.ImageField(required=False, allow_null=True)
     username = serializers.CharField(max_length=31)
     password = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)

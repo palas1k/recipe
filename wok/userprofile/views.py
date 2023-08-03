@@ -15,19 +15,19 @@ from userprofile.serializers import ProfileSerializer, ChangePasswordSerializer
 from .serializers import SignUpSerializer
 
 
-class ProfileDetail(DetailView):
-    """Просмотр профиля пользователя"""
-    model = Profile
-    template_name = 'userprofile/profile.html'
-    context_object_name = 'profile'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileDetail, self).get_context_data(**kwargs)
-        try:
-            context['followers'] = Follower.objects.get(subscribe=self.kwargs['id'])
-        except:
-            HttpResponse('Нет подписчиков')
-        return context
+# class ProfileDetail(DetailView):
+#     """Просмотр профиля пользователя"""
+#     model = Profile
+#     template_name = 'userprofile/profile.html'
+#     context_object_name = 'profile'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(ProfileDetail, self).get_context_data(**kwargs)
+#         try:
+#             context['followers'] = Follower.objects.get(subscribe=self.kwargs['id'])
+#         except:
+#             HttpResponse('Нет подписчиков')
+#         return context
 
 
 class ProfileAPIView(APIView):
@@ -45,7 +45,7 @@ class MyProfileAPIView(APIView):
 
     def get(self, request):
         # serializer = ProfileSerializer(request.user)
-        profile = get_object_or_404(Profile, pk=request.user.pk)
+        profile = get_object_or_404(Profile, user=request.user)
         return Response(ProfileSerializer(profile).data, status=status.HTTP_200_OK)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -55,7 +55,7 @@ class MyProfileAPIView(APIView):
         return Response(status=status.HTTP_200_OK)
 
     def patch(self, request):
-        profile = get_object_or_404(Profile, pk=request.user.pk)
+        profile = get_object_or_404(Profile, user=request.user)
         serializer = ProfileSerializer(instance=profile, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -73,7 +73,8 @@ class ChangePasswordView(APIView):
 
     def post(self, request):
         self.object = self.get_object()
-        serializer = self.get_serializer(data=request.data)
+        serializer = ChangePasswordSerializer(data=request.data)
+        # serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             if not self.object.check_password(serializer.data.get("old_password")):
@@ -83,7 +84,7 @@ class ChangePasswordView(APIView):
             response = {
                 'message': 'Password updated successfully',
             }
-            return Response(response)
+            return Response(response, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
