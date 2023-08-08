@@ -35,7 +35,7 @@ class ProfileSerializerTestCase(TestCase):
         self.data = ProfileSerializer(self.profile).data
 
     def test_profile(self):
-        expected_data = {'avatar': None, 'user': OrderedDict([('username', "{'username': 'user1'}")])}
+        expected_data = {'avatar': None, 'user': "{'username': 'user1'}"}
         self.assertEqual(expected_data, self.data)
 
 

@@ -21,7 +21,6 @@ class GetProfileAPIViewTestCase(APITestCase):
     def test_get_profile_unauthorized(self):
         url = reverse('profile', args=(self.user1.id,))
         response = self.client.get(url)
-        serializer_data = ProfileSerializer(self.profile).data
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_get_profile_authorized(self):

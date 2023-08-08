@@ -10,14 +10,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
-from .forms import *
-from .models import Post
+from .models import Post, PostContent
 from .serializers import AllPostsSerializer, PostSerializer, CreatePostSerializer, PostContentSerializer
 from .pagination import Pagination
-from .permissions import IsAdminAuthenticatedReadOnly, IsAdminOnly
 
 
 # class PostsList(ListView):
@@ -26,9 +25,9 @@ from .permissions import IsAdminAuthenticatedReadOnly, IsAdminOnly
 #     context_object_name = 'foodrecipe_post_posts'
 #     queryset = Post.objects.filter(is_published=True, moderated=True).order_by('-date_created')
 
-    # def get_queryset(self):
-    #    user = get_object_or_404(User, username = self.kwargs.get('username'))
-    #    return Post.objects.filter(author = user).order_by('-date_created')
+# def get_queryset(self):
+#    user = get_object_or_404(User, username = self.kwargs.get('username'))
+#    return Post.objects.filter(author = user).order_by('-date_created')
 
 
 # class CreatePost(CreateView):
@@ -62,31 +61,22 @@ from .permissions import IsAdminAuthenticatedReadOnly, IsAdminOnly
 #     context_object_name = 'post'
 
 
-
 # class PostsAPIView(ListAPIView):
 #     serializer_class = PostSerializer
 #     queryset = Post.objects.all()
 #
 class PostRetrieveAPIView(APIView):
     serializer_class = PostSerializer
-    permission_classes = (IsAdminAuthenticatedReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, pk):
-        post= Post.objects.get(pk=pk)
+        post = Post.objects.get(pk=pk)
         return Response(PostSerializer(post).data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         post = Post.objects.get(pk=pk)
         post.delete()
         return Response(status=status.HTTP_200_OK)
-        # if post.author == self.request.user:
-        #     post.delete()
-        #     return Response('Пост удален', status=status.HTTP_200_OK)
-        # else:
-        #     return Response('Нет прав на удаление поста', status= status.HTTP_403_FORBIDDEN)
-
-    # def get_object(self, pk):
-    #     return Post.objects.get(pk=pk)
 
     def patch(self, request, pk):
         # post = self.get_object(pk)
@@ -95,7 +85,6 @@ class PostRetrieveAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 
 class AllPostsAPIView(APIView):
@@ -111,16 +100,18 @@ class AllPostsAPIView(APIView):
         paginated_qs = paginator.paginate_queryset(filtered_qs, request)
         return paginator.get_paginated_response(AllPostsSerializer(paginated_qs, many=True).data)
 
+
 class CreatePostAPIView(APIView):
     serializer_class = CreatePostSerializer
-    permission_classes = (IsAdminOnly,)
+    permission_classes = (IsAuthenticated,)
+
     def post(self, request):
-        data = Post.objects.create(title = request.data["title"])
+        data = Post.objects.create(title=request.data["title"])
         contents = request.data['post_content']
         for content in contents:
             PostContent.objects.create(
-                post_id = data.id,
-                text = content['text'],
-                image = content['image'],
+                post_id=data.id,
+                text=content['text'],
+                image=content['image'],
             )
         return Response(PostSerializer(data).data, status=status.HTTP_201_CREATED)
