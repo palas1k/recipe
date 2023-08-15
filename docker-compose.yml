@@ -1,0 +1,11 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./wok:/wok
+
+    command: >
+      sh -c “python manage.py runserver”
