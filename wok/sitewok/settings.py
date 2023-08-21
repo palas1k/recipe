@@ -111,12 +111,16 @@ WSGI_APPLICATION = 'sitewok.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wokproject',
-        'USER': 'postgres',
-        'PASSWORD': 'Password',
-        'HOST': 'localhost',
-        'PORT': '',
-    },
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        # 'NAME': 'wokproject',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'password',
+        # 'HOST': 'database',
+        # 'PORT': os.environ.get('DB_PORT'),
+    }
 }
 
 # Password validation
