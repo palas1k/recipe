@@ -140,3 +140,4 @@ GitHub.sublime-settings
 .sqlite3
 .projects_for_team
 data
+htmlcov

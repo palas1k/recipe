@@ -193,3 +193,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
+
+# celery settings
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+BROKER_CONNECTION_RETRY = True
