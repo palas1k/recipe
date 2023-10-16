@@ -21,7 +21,7 @@ from .pagination import Pagination
 
 # class PostsList(ListView):
 #     model = Post
-#     template_name = 'post_create/index.html'
+#     template_name = 'posts/index.html'
 #     context_object_name = 'foodrecipe_post_posts'
 #     queryset = Post.objects.filter(is_published=True, moderated=True).order_by('-date_created')
 
@@ -31,7 +31,7 @@ from .pagination import Pagination
 
 
 # class CreatePost(CreateView):
-#     template_name = 'post_create/addpage.html'
+#     template_name = 'posts/addpage.html'
 #     model = Post
 #     form_class = PostForm
 #     success_url = ''
@@ -57,7 +57,7 @@ from .pagination import Pagination
 #
 # class PostView(DetailView):
 #     model = Post
-#     template_name = 'post_create/postdetail.html'
+#     template_name = 'posts/postdetail.html'
 #     context_object_name = 'post'
 
 

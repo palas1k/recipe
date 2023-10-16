@@ -1,6 +1,6 @@
 from django.db import models
 
-from post_create.models import Post
+from posts.models import Post
 from userprofile.models import Profile
 
 
@@ -9,11 +9,9 @@ class Comments(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time_create = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=600, verbose_name='Текст комментария')
+    reply_for = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
+    # TODO сделать одну модель с FK 'self'
 
-class Reply(models.Model):
-    comment = models.ForeignKey(Comments, on_delete=models.CASCADE, blank=True, null=True,
-                                related_name='reply_comments')
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    time_create = models.DateTimeField(auto_now=True)
-    text = models.TextField(max_length=600, verbose_name='Ответ на комментарий')
+    def __str__(self):
+        return f"comment from {self.author} to {self.reply_for}"

@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 from rest_framework import status
 
-from post_create.models import Post, PostContent
-from post_create.serializers import PostContentSerializer, PostSerializer, AllPostsSerializer, CreatePostSerializer
+from posts.models import Post, PostContent
+from posts.serializers import PostContentSerializer, PostSerializer, AllPostsSerializer, CreatePostSerializer
 
 
 class PostContentSerializerTestCase(TestCase):

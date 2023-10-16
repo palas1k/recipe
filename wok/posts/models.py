@@ -30,6 +30,9 @@ class Post(models.Model):
     reply = models.ForeignKey('self', null=True, related_name='reply_ok', on_delete=models.CASCADE, blank=True)
     likes = GenericRelation(Like)
 
+    # TODO подсчет комментариев под постом +celery
+    # подсчет лайков под постом
+
     # views =
 
     # для получения контента связанного с постом

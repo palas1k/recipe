@@ -7,8 +7,8 @@ from rest_framework import status
 
 from rest_framework.test import force_authenticate, APITestCase
 
-from post_create.models import Post, PostContent
-from post_create.serializers import PostSerializer, AllPostsSerializer
+from posts.models import Post, PostContent
+from posts.serializers import PostSerializer, AllPostsSerializer
 
 
 class PostRetrieveAPIViewTestCase(APITestCase):
