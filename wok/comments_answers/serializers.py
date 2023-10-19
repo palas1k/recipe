@@ -1,7 +1,10 @@
-from models import Comments
+from django.db.models import TextField
+
+from .models import Comments
 from rest_framework.serializers import ModelSerializer
 
 
 class CommentsSerializer(ModelSerializer):
-    model = Comments
-    fields = ('text',)
+    class Meta:
+        model = Comments
+        fields = ('text',)
