@@ -53,7 +53,7 @@ PROJECT_APPS = [
     'posts.apps.FoodrecipeConfig',
     'userprofile.apps.UserprofileConfig',
     'follow_likes_bms.apps.FollowLikesBmsConfig',
-    'comments_answers.apps.CommentsAnswersConfig',
+    'comments.apps.CommentsAnswersConfig',
 ]
 
 INSTALLED_APPS = [

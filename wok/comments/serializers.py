@@ -1,7 +1,7 @@
 from django.db.models import TextField
 
 from .models import Comments
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, IntegerField
 
 
 class CommentsSerializer(ModelSerializer):

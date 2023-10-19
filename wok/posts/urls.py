@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from comments_answers.views import CommentsAPIView
+from comments.views import CommentsAPIView
 from .views import *
 from .views import AllPostsAPIView, PostRetrieveAPIView, CreatePostAPIView
 

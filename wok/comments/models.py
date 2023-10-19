@@ -14,4 +14,4 @@ class Comments(models.Model):
     # TODO сделать одну модель с FK 'self'
 
     def __str__(self):
-        return f"comment from {self.author} to {self.reply_for}"
+        return f"comment from {self.author} to {self.post.title}"
