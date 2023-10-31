@@ -2,7 +2,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
-from follow_likes_bms.models import Follower
+from follow_likes.models import Follower
 
 # def follow_check(request, subscribe):
 #     '''Проверка подписан ли человек'''

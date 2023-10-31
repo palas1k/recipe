@@ -3,7 +3,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.urls import reverse
 
-from follow_likes_bms.models import Like
+from follow_likes.models import Like
 
 
 class Post(models.Model):
@@ -15,8 +15,6 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100, help_text='Не более 100 символов', verbose_name='Заголовок')
     slug = models.SlugField(max_length=100)
-    # content = models.ForeignKey('PostContent', on_delete= models.CASCADE)
-    # image = models.ForeignKey('PostImage', verbose_name='Изображение', on_delete= models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     moderated = models.BooleanField(default=False, verbose_name='Проверено модерацией')
@@ -26,14 +24,14 @@ class Post(models.Model):
     type = models.ForeignKey('Type', verbose_name='Категория', on_delete=models.SET_NULL, null=True)
     group = models.ForeignKey('Group', verbose_name='Group of food', on_delete=models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    # comments = models.ManyToManyField()
     reply = models.ForeignKey('self', null=True, related_name='reply_ok', on_delete=models.CASCADE, blank=True)
     likes = GenericRelation(Like)
+    count_views = models.IntegerField(null=True, blank=True)
+    count_comments = models.IntegerField(null=True, blank=True)
 
     # TODO подсчет комментариев под постом +celery
-    # подсчет лайков под постом
-
-    # views =
+    #  подсчет лайков под постом
+    #  подсчет просмотров
 
     # для получения контента связанного с постом
     def get_all_postcontent(self):

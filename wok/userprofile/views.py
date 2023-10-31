@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import CreateAPIView
 
-from follow_likes_bms.models import Follower
+from follow_likes.models import Follower
 from userprofile.models import Profile
 from userprofile.serializers import ProfileSerializer, ChangePasswordSerializer
 from .serializers import SignUpSerializer

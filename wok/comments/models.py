@@ -2,6 +2,7 @@ from django.db import models
 
 from posts.models import Post
 from userprofile.models import Profile
+from posts.tasks import count_comments
 
 
 class Comments(models.Model):
@@ -15,3 +16,8 @@ class Comments(models.Model):
 
     def __str__(self):
         return f"comment from {self.author} to {self.post.title}"
+
+    def save(self):
+        item_id = self.post.__getattribute__('id')
+        count_comments.delay(item_id)
+        return super().save()

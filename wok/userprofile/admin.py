@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from follow_likes_bms.models import Like, Follower
+from follow_likes.models import Like, Follower
 from userprofile.models import Profile
 
 
