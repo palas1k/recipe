@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.urls import reverse
-
-from follow_likes.models import Like
 
 
 class Post(models.Model):
@@ -24,8 +21,7 @@ class Post(models.Model):
     type = models.ForeignKey('Type', verbose_name='Категория', on_delete=models.SET_NULL, null=True)
     group = models.ForeignKey('Group', verbose_name='Group of food', on_delete=models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    reply = models.ForeignKey('self', null=True, related_name='reply_ok', on_delete=models.CASCADE, blank=True)
-    likes = GenericRelation(Like)
+    count_likes = models.IntegerField(null=True, blank=True)
     count_views = models.IntegerField(null=True, blank=True)
     count_comments = models.IntegerField(null=True, blank=True)
 
@@ -36,12 +32,6 @@ class Post(models.Model):
     # для получения контента связанного с постом
     def get_all_postcontent(self):
         return PostContent.objects.filter(post=self.pk)
-
-    def likes_count(self):
-        return self.likes.count()
-
-    def reply_count(self):
-        return self.reply.count()
 
     def get_absolute_url(self):
         return reverse('post-view', kwargs={'pk': self.pk})
