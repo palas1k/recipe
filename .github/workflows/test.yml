@@ -21,5 +21,6 @@ jobs:
           pip install -r requirements.txt
       - name: Run Tests
         run: |
-          cd /wok
-          python3 manage.py test
+          docker compose up --build
+          docker compose exec -it ninjabook-web-app-1 python manage.py test
+          docker compose down
