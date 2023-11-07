@@ -28,6 +28,7 @@ jobs:
         run: |
           sudo systemctl start postgresql.service
           sudo -u postgres createuser -s runner
+          sudo su - root
           chmod og+X /home
 
       - name: Install requirements
