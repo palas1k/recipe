@@ -28,6 +28,7 @@ jobs:
         run: |
           sudo systemctl start postgresql.service
           sudo -u postgres createuser -s runner
+          chmod og+X /home
 
       - name: Install requirements
         run: pip install -r requirements.txt
