@@ -27,8 +27,6 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install db
-        run: psql -h postgres -U postgres -c 'CREATE DATABASE postgres'
       - name: Run Tests
         run: |
           cd ./wok
