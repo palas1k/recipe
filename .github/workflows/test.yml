@@ -27,14 +27,13 @@ jobs:
       - name: Start Postgresql
         run: |
           sudo systemctl start postgresql.service
-          sudo su postgres
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Run Tests
         env:
-          #          POSTGRES_HOST: localhost
+          POSTGRES_HOST: localhost
           POSTGRES_USER: postgres
           POSTGRES_DATABASE: postgres
           POSTGRES_PASSWORD: postgres
