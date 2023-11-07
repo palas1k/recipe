@@ -10,14 +10,12 @@ jobs:
       db:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
         ports:
-          - 5432/tcp
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          - 5432/5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -34,8 +32,8 @@ jobs:
           python manage.py migrate
           python3 manage.py test
         env:
-          PG_HOST: postgres
-          PG_USER: postgres
-          PG_DATABASE: postgres
-          PG_PASSWORD: postgres
-          PG_PORT: ${{ job.services.postgres.ports['5432'] }}
+          POSTGRES_HOST: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DATABASE: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports['5432'] }}
