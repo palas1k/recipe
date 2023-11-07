@@ -118,8 +118,8 @@ DATABASES = {
         # 'NAME': 'wokproject',
         # 'USER': 'postgres',
         # 'PASSWORD': 'password',
-        # 'HOST': 'database',
-        # 'PORT': os.environ.get('DB_PORT'),
+        # 'HOST': 'localhost',
+        # 'PORT': 5433,
     }
 }
 
