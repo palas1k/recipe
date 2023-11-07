@@ -17,6 +17,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from .models import Post, PostContent
 from .serializers import AllPostsSerializer, PostSerializer, CreatePostSerializer, PostContentSerializer
 from .pagination import Pagination
+from .tasks import count_view
 
 
 # class PostsList(ListView):
@@ -71,6 +72,7 @@ class PostRetrieveAPIView(APIView):
 
     def get(self, request, pk):
         post = Post.objects.get(pk=pk)
+        count_view.delay(pk)
         return Response(PostSerializer(post).data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):

@@ -27,7 +27,8 @@ class PostSerializerTestCase(TestCase):
     def test_post_create(self):
         post = Post.objects.create(title='тест1')
         data = PostSerializer(post).data
-        self.assertEqual(14, len(data.values()))
+        print(data.values())
+        self.assertEqual(16, len(data.values()))
 
 
 class AllPostsSerializerTestCase(TestCase):

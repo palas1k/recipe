@@ -28,3 +28,19 @@ def count_likes(post_id):
     likes_count = post.like_set.count()
     post.count_likes = likes_count
     post.save()
+
+
+@shared_task
+def count_view(post_id):
+    '''
+    Подсчет просмотров поста
+    :param post_id:
+    :return:
+    '''
+    from .models import Post
+    post = get_object_or_404(Post, pk=post_id)
+    if post.count_views is None:
+        post.count_views = 1
+    else:
+        post.count_views += 1
+    post.save(update_fields=('count_views',))
