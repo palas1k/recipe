@@ -19,7 +19,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install sudo
 
       - name: Install requirements
         run: |
