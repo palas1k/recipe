@@ -15,10 +15,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install Dependencies
+      - name: Install sudo
         run: |
+          run: apt update && apt install sudo
           sudo apt update
+      - name: Install psql
+        run: |
           sudo apt install -y postgresql postgresql-contrib
+      - name: Install requirements
+        run: |
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run Tests
