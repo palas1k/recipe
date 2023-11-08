@@ -19,10 +19,11 @@ jobs:
       #          docker exec recipe-web-app-1 sh
       - name: Check Containers
         run: docker ps
-        
+
       - name: Check psql
         run: |
-          docker exec recipe-database-1 psql -U postgres
+          docker exec recipe-database-1 bash
+          psql -U postgres
           CREATE DATABASE postgres;
           exit
 
