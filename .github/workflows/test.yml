@@ -14,8 +14,11 @@ jobs:
       - name: Build docker
         run: docker compose up --build -d
 
-      - name: Create db
-        run: docker exec recipe-web-app-1  sudo -u postgres createdb postgres
+      #      - name: Create db
+      #        run: |
+      #          docker exec recipe-web-app-1 sh
+      #          sudo su - postgres
+      #          psql -c "create database demo"
 
       - name: Start test
-        run: docker exec recipe-web-app-1 python manage.py test .
+        run: docker exec recipe-web-app-1 python manage.py test
