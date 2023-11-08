@@ -7,7 +7,7 @@ RUN apk add postgresql-client build-base postgresql-dev
 RUN pip install -r /temp/requirements.txt
 
 RUN adduser --disabled-password wokuser
-COPY wok /wok
+COPY . /wok
 WORKDIR /wok
 EXPOSE 8000
 
