@@ -22,7 +22,7 @@ jobs:
 
       - name: Check psql
         run: |
-          docker exec recipe-web-app-1 sh -c "apt-get install postgresql-9.5"         
+          docker exec recipe-web-app-1 sh -c "apt-get install postgresql-14"         
           docker exec recipe-database-1 psql -U postgres
           CREATE DATABASE postgres;
           exit
