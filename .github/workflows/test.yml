@@ -14,15 +14,14 @@ jobs:
       - name: Build docker
         run: docker compose up --build -d
 
-      - name: Shell
-        run: |
-          docker exec recipe-web-app-1 sh
-          whoami
-          getent passwd
-          exit
+      #      - name: Shell
+      #        run: |
+      #          docker exec recipe-web-app-1 sh
 
       - name: Start test
         run: |
           docker exec recipe-web-app-1 sh -c "python manage.py makemigrations userprofile"
+          docker exec recipe-web-app-1 sh -c "python manage.py migrate"
+          docker exec recipe-web-app-1 sh -c "python manage.py makemigrations"
           docker exec recipe-web-app-1 sh -c "python manage.py migrate"
           docker exec recipe-web-app-1 python manage.py test
