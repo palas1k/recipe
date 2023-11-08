@@ -16,6 +16,6 @@ jobs:
 
       - name: Start test
         run: |
-          docker exec recipe-web-app-1 python manage.py makemigrations
+          docker exec recipe-web-app-1 python manage.py makemigrations userprofile
           docker exec recipe-web-app-1 python manage.py migrate
           docker exec recipe-web-app-1 python manage.py test
