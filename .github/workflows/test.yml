@@ -17,7 +17,8 @@ jobs:
       - name: Shell
         run: |
           docker exec recipe-web-app-1 sh
-          getent
+          whoami
+          getent passwd
           exit
 
       - name: Start test
