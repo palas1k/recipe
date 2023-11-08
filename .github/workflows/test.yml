@@ -20,6 +20,9 @@ jobs:
       - name: Check Containers
         run: docker ps
 
+      - name: Check cluster
+        run: docker exec recipe-web-app-1 sh -c "pg_lsclusters"
+
       - name: Check psql
         run: |
           docker exec recipe-database-1 sh
