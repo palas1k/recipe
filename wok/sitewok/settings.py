@@ -39,9 +39,6 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'debug_toolbar',
     'ckeditor',
     'drf_spectacular',

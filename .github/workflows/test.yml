@@ -20,8 +20,6 @@ jobs:
 
       - name: Start test
         run: |
-          docker exec recipe-web-app-1 sh
-          python3 manage.py makemigrations
-          python3 manage.py migrate
-          python3 manage.py test
-          exit
+          docker exec recipe-web-app-1 sh -c "python manage.py makemigrations userprofile posts follow likes comments"
+          docker exec recipe-web-app-1 sh -c "python manage.py migrate"
+          docker exec recipe-web-app-1 python manage.py test
