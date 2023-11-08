@@ -18,7 +18,10 @@ jobs:
       #        run: |
       #          docker exec recipe-web-app-1 sh
       - name: Check psql
-        run: docker exec recipe-web-app-1 sh -c "systemctl status postgresql"
+        run: |
+          docker exec recipe-database-1 psql -U postgres
+          CREATE DATABASE postgres;
+          exit
 
       - name: Start test
         run: |
