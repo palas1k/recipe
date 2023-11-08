@@ -2,6 +2,7 @@ services:
   web-app:
     build:
       context: .
+    user: postgres
     ports:
       - "8000:8000"
     volumes:
