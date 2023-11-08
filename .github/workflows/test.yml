@@ -22,8 +22,7 @@ jobs:
 
       - name: Check psql
         run: |
-          docker exec recipe-database-1 bin/bash
-          psql -U postgres
+          docker exec recipe-database-1 psql -U postgres
           CREATE DATABASE postgres;
           exit
 
