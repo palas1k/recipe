@@ -14,9 +14,6 @@ jobs:
       - name: Build docker
         run: docker compose up --build -d
 
-      #      - name: Shell
-      #        run: |
-      #          docker exec recipe-web-app-1 sh
       - name: Check Containers
         run: docker ps
 
@@ -28,6 +25,6 @@ jobs:
 
       - name: Start test
         run: |
-          docker exec recipe-web-app-1 sh -c "python manage.py makemigrations"
-          docker exec recipe-web-app-1 sh -c "python manage.py migrate --noinput"
-          docker exec recipe-web-app-1 python manage.py test
+          #          docker exec recipe-web-app-1 sh -c "python manage.py makemigrations"
+          #          docker exec recipe-web-app-1 sh -c "python manage.py migrate --noinput"
+               docker exec recipe-web-app-1 python manage.py test
