@@ -25,4 +25,4 @@ jobs:
       #          exit
 
       - name: Start test
-        run: docker-compose run -u --rm web-app bash -c "python manage.py test"
+        run: docker-compose run - root --rm web-app bash -c "python manage.py test"
