@@ -25,4 +25,5 @@ jobs:
       #          exit
 
       - name: Start test
-        run: docker compose exec recipe-web-app-1 python manage.py test
+        #run: docker compose exec recipe-web-app-1 python manage.py test
+        run: docker run --name database -p 5432:5432 -e
