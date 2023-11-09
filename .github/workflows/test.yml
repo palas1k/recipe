@@ -25,4 +25,4 @@ jobs:
       #          exit
 
       - name: Start test
-        run: docker compose run --rm web-app sh -c "python manage.py makemigrations userprofile && python manage.py test"
+        run: docker compose run --rm web-app sh -c "python manage.py test"
