@@ -30,7 +30,7 @@ services:
       - "5432:5432"
 
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data:z
 
   redis:
     image: redis:7.2-alpine
