@@ -31,7 +31,6 @@ media
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
-migrations/
 
 # Gradle
 .idea/**/gradle.xml
