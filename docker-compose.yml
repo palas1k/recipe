@@ -17,7 +17,8 @@ services:
              python manage.py runserver 0.0.0.0:8000"
 
     depends_on:
-      - database
+      database:
+        condition: service_healthy
   
   database:
     user: root
