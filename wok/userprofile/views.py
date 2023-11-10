@@ -98,9 +98,4 @@ class SignUpView(APIView):
         user = User(username=serializer.data.get('username'))
         user.set_password(serializer.validated_data.get('password'))
         user.save()
-        # Profile.objects.create(
-        #     user = user,
-        #     avatar = serializer.data.get('avatar'),
-        # )
-
         return Response(status=status.HTTP_201_CREATED)

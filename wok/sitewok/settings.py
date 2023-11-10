@@ -39,9 +39,6 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'debug_toolbar',
     'ckeditor',
     'drf_spectacular',
@@ -50,10 +47,10 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-    'posts.apps.FoodrecipeConfig',
-    'userprofile.apps.UserprofileConfig',
-    'follow_likes.apps.FollowLikesBmsConfig',
-    'comments.apps.CommentsAnswersConfig',
+    'userprofile',
+    'posts',
+    'follow_likes',
+    'comments',
 ]
 
 INSTALLED_APPS = [
@@ -95,7 +92,6 @@ TEMPLATES = [
 # allauth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 LOGIN_REDIRECT_URL = 'home'
@@ -118,8 +114,8 @@ DATABASES = {
         # 'NAME': 'wokproject',
         # 'USER': 'postgres',
         # 'PASSWORD': 'password',
-        # 'HOST': 'database',
-        # 'PORT': os.environ.get('DB_PORT'),
+        # 'HOST': 'localhost',
+        # 'PORT': 5433,
     }
 }
 

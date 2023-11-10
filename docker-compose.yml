@@ -2,6 +2,7 @@ services:
   web-app:
     build:
       context: .
+    user: root
     ports:
       - "8000:8000"
     volumes:
@@ -12,20 +13,33 @@ services:
       - DB_USER=postgres
       - DB_PASS=password
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
     depends_on:
-      - database
+      database:
+        condition: service_healthy
   
   database:
+    user: root
     image: postgres:14-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=database
       - POSTGRES_PASSWORD=password
 
+    ports:
+      - "5432:5432"
+
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data:z
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   redis:
     image: redis:7.2-alpine
     hostname: redis

@@ -1,18 +1,28 @@
 name: Tests
-on: [ pull_request ]
+on: [ push ]
 
 jobs:
   run_unittests:
     runs-on: ubuntu-latest
-    container: python:3.10-alpine
+    env:
+      COMPOSE_FILE: docker-compose.yml
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run Tests
-        run: |
-          cd ./wok
-          python3 manage.py test
+
+      - name: Build docker
+        run: docker compose up --build -d
+
+
+      - name: Check Containers
+        run: docker ps
+
+      #      - name: Check psql
+      #        run: |
+      #          docker exec recipe-database-1 psql -U postgres
+      #          CREATE DATABASE postgres;
+      #          exit
+
+      - name: Start test
+        run: docker compose run --rm web-app sh -c "python manage.py test"
