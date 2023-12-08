@@ -8,8 +8,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import force_authenticate, APITestCase
 
-from userprofile.serializers import ProfileSerializer
-from userprofile.models import Profile
+from wok.userprofile.serializers import ProfileSerializer
+from wok.userprofile.models import Profile
 
 
 class GetProfileAPIViewTestCase(APITestCase):

@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 
 from rest_framework.serializers import ValidationError
 
-from userprofile.serializers import ProfileSerializer, UserSerializer, ChangePasswordSerializer, SignUpSerializer
-from userprofile.models import Profile
+from wok.userprofile.serializers import ProfileSerializer, UserSerializer, ChangePasswordSerializer, SignUpSerializer
+
+from wok.userprofile.models import Profile
 
 
 class UserSerializerTestCase(TestCase):
