@@ -19,8 +19,7 @@ class CommentsAPIView(APIView):
         comments = Comments.objects.filter(post_id=pk)
         return Response(CommentsSerializer(comments, many=True).data, status=status.HTTP_200_OK)
 
-    # @extend_schema(parameters=[OpenApiParameter('reply_id', int)])
-    def post(self, request, pk):
+    def post(self, request, pk, **kwargs):
         _user = Profile.objects.get(user=request.user)
         serializer = CommentsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

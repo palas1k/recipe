@@ -17,7 +17,7 @@ class Comments(models.Model):
     def __str__(self):
         return f"comment from {self.author} to {self.post.title}"
 
-    def save(self):
+    def save(self, *args, **kwargs):
         item_id = self.post.__getattribute__('id')
         count_comments.delay(item_id)
-        return super().save()
+        return super().save(*args, **kwargs)
