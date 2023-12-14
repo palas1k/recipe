@@ -10,7 +10,7 @@ class Comments(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time_create = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=600, verbose_name='Текст комментария')
-    reply_for = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    reply_for = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, default=None)
 
     # TODO сделать одну модель с FK 'self'
 

@@ -47,10 +47,10 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-    'userprofile',
+    'userprofile.apps.UserprofileConfig',
     'posts',
     'follow_likes',
-    'comments',
+    'comments.apps.CommentsAnswersConfig',
 ]
 
 INSTALLED_APPS = [

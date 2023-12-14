@@ -20,14 +20,13 @@ class CommentsAPIView(APIView):
         return Response(CommentsSerializer(comments, many=True).data, status=status.HTTP_200_OK)
 
     # @extend_schema(parameters=[OpenApiParameter('reply_id', int)])
-    def post(self, request, pk, reply_id):
+    def post(self, request, pk):
         _user = Profile.objects.get(user=request.user)
         serializer = CommentsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(
             author=_user,
             post_id=pk,
-            reply_for_id=reply_id,
         )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
