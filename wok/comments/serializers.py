@@ -10,8 +10,8 @@ class CommentsSerializer(ModelSerializer):
         model = Comments
         fields = ('text', 'reply_for')
 
-    def create(self, validated_data):
-        obj = Comments.objects.create(**validated_data)
-        obj.save(reply_for_id=validated_data['reply_for'])
-        return obj
+    # def create(self, validated_data):
+    #     obj = Comments.objects.create(**validated_data)
+    #     obj.save(reply_for_id=validated_data['reply_for'])
+    #     return obj
 

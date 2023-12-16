@@ -193,3 +193,6 @@ REST_FRAMEWORK = {
 # celery settings
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 BROKER_CONNECTION_RETRY = True
+
+
+AUTH_USER_MODEL = 'userprofile.Profile'

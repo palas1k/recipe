@@ -6,18 +6,10 @@ from rest_framework.serializers import ModelSerializer, Serializer, ValidationEr
 from userprofile.models import Profile
 
 
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username',)
-
-
 class ProfileSerializer(ModelSerializer):
-    user = CharField(source='user.username')
-
     class Meta:
         model = Profile
-        fields = ('avatar', 'user')
+        fields = ('username', 'avatar')
 
 
 class ChangePasswordSerializer(Serializer):

@@ -43,13 +43,12 @@ class MyProfileAPIView(APIView):
     serializer_class = ProfileSerializer
 
     def get(self, request):
-        # serializer = ProfileSerializer(request.user)
-        profile = get_object_or_404(Profile, user=request.user)
+        profile = get_object_or_404(Profile, pk=request.user.pk)
         return Response(ProfileSerializer(profile).data, status=status.HTTP_200_OK)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request):
-        profile = get_object_or_404(User, pk=request.user.pk)
+        profile = get_object_or_404(Profile, pk=request.user.pk)
         profile.delete()
         return Response(status=status.HTTP_200_OK)
 
@@ -63,7 +62,7 @@ class MyProfileAPIView(APIView):
 
 class ChangePasswordView(APIView):
     serializer_class = ChangePasswordSerializer
-    model = User
+    model = Profile
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
@@ -94,7 +93,7 @@ class SignUpView(APIView):
     def post(self, request):
         serializer = SignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = User(username=serializer.data.get('username'))
+        user = Profile(username=serializer.data.get('username'))
         user.set_password(serializer.validated_data.get('password'))
         user.save()
         return Response(status=status.HTTP_201_CREATED)

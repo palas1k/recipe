@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+
+from userprofile.models import Profile
 
 
 class Post(models.Model):
@@ -20,7 +21,7 @@ class Post(models.Model):
     ingredients = models.ManyToManyField('Ing', verbose_name='Ингридиенты')
     type = models.ForeignKey('Type', verbose_name='Категория', on_delete=models.SET_NULL, null=True)
     group = models.ForeignKey('Group', verbose_name='Group of food', on_delete=models.SET_NULL, null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     count_likes = models.IntegerField(null=True, blank=True)
     count_views = models.IntegerField(null=True, blank=True)
     count_comments = models.IntegerField(null=True, blank=True)
