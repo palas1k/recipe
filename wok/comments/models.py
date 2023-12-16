@@ -6,7 +6,7 @@ from posts.tasks import count_comments
 
 
 class Comments(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name='comments_post')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=False, null=False, related_name='comments_post')
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time_create = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=600, verbose_name='Текст комментария')

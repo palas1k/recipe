@@ -15,9 +15,8 @@ def client():
 
 
 @pytest.fixture()
-def user(django_db_setup, django_db_blocker):
-    with django_db_blocker.unblock():
-        return User.objects.create(username="User")
+def testuser():
+    return Profile.objects.create(username='user1')
 
 
 # @pytest.fixture()

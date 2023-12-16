@@ -17,7 +17,7 @@ class Profile(AbstractUser):
         return True
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
 
     class Meta():
