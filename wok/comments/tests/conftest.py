@@ -24,6 +24,17 @@ def testuser():
 def post():
     return baker.make(Post)
 
+
+@pytest.fixture()
+def url(post):
+    return f"/api/v1/post/{post.pk}/comment/"
+
+
 @pytest.fixture()
 def comment():
     return baker.make(Comments)
+
+
+@pytest.fixture()
+def comment_with_post(post):
+    return baker.make(Comments, post=post)
