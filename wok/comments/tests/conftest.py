@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from rest_framework.test import APIClient
 
+from comments.models import Comments
 from posts.models import Post
 from userprofile.models import Profile
 
@@ -22,3 +23,7 @@ def testuser():
 @pytest.fixture()
 def post():
     return baker.make(Post)
+
+@pytest.fixture()
+def comment():
+    return baker.make(Comments)

@@ -16,7 +16,6 @@ def test_get_comment(post):
     assert serializer.data
 
 
-@pytest.mark.django_db
 def test_post_comment(post):
     expected_data = {
         'text': 'Тестовый комментарий',
