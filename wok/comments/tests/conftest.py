@@ -19,6 +19,6 @@ def testuser():
     return Profile.objects.create(username='user1')
 
 
-# @pytest.fixture()
-# def post():
-#     return baker.make(Post)
+@pytest.fixture()
+def post():
+    return baker.make(Post)

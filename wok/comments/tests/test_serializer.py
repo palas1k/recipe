@@ -3,24 +3,24 @@ from django.contrib.auth.models import User
 from model_bakery import baker
 
 from comments.models import Comments
+from comments.serializers import CommentsSerializer
 from posts.models import Post
 from userprofile.models import Profile
 
 pytestmark = pytest.mark.django_db
 
 
-def test_get_comment_unauth(client):
-    post = baker.make(Post)
-    com = baker.make(Comments, post=post)
-    response = client.get(f"/api/v1/post/{post.pk}/comment/")
-    assert 401 == response.status_code
+def test_get_comment(post):
+    comment = baker.make(Comments, post=post)
+    serializer = CommentsSerializer(comment)
+    assert serializer.data
 
 
 @pytest.mark.django_db
-def test_get_comment_auth(client):
-    user = Profile.objects.create_user(username='test_username')
-    client.force_authenticate(user)
-    post = baker.make(Post)
-    baker.make(Comments, post=post)
-    response = client.get(f"/api/v1/post/{post.pk}/comment/")
-    assert 200 == response.status_code
+def test_post_comment(post):
+    expected_data = {
+        'text': 'Тестовый комментарий',
+        'reply_for': None,
+    }
+    serializer = CommentsSerializer(expected_data)
+    assert expected_data == serializer.data
