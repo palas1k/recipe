@@ -1,3 +1,4 @@
+import json
 from collections import OrderedDict
 
 from django.db.models import CharField
@@ -7,36 +8,32 @@ from django.contrib.auth.models import User
 
 from rest_framework.serializers import ValidationError
 
-from wok.userprofile.serializers import ProfileSerializer, UserSerializer, ChangePasswordSerializer, SignUpSerializer
+from userprofile.serializers import ProfileSerializer, ChangePasswordSerializer, SignUpSerializer
 
-from wok.userprofile.models import Profile
+from userprofile.models import Profile
 
 
 class UserSerializerTestCase(TestCase):
     def test_user(self):
-        user1 = User.objects.create(username='user1')
-        user2 = User.objects.create(username='user2')
-        data = UserSerializer([user1, user2], many=True).data
+        user1 = Profile.objects.create(username='user1')
+        user2 = Profile.objects.create(username='user2')
+        data = ProfileSerializer([user1, user2], many=True).data
         expect_data = [
-            {
-                'username': 'user1'
-            },
-            {
-                'username': 'user2'
-            },
+            OrderedDict([('username', 'user1'), ('avatar', None)]),
+            OrderedDict([('username', 'user2'), ('avatar', None)])
         ]
+        self.assertEqual(2, len(data))
         self.assertEqual(expect_data, data)
 
 
 class ProfileSerializerTestCase(TestCase):
 
     def setUp(self):
-        self.profile = User.objects.create_user({"username": "user1"})
-        self.profile = get_object_or_404(Profile, pk=self.profile.pk)
+        self.profile = Profile.objects.create_user(username='user1')
         self.data = ProfileSerializer(self.profile).data
 
     def test_profile(self):
-        expected_data = {'avatar': None, 'user': "{'username': 'user1'}"}
+        expected_data = {'avatar': None, 'username': 'user1'}
         self.assertEqual(expected_data, self.data)
 
 

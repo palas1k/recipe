@@ -1,7 +1,5 @@
 import json
-from collections import OrderedDict
 
-from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 
@@ -9,13 +7,14 @@ from rest_framework.test import force_authenticate, APITestCase
 
 from posts.models import Post, PostContent
 from posts.serializers import PostSerializer, AllPostsSerializer
+from userprofile.models import Profile
 
 
 class PostRetrieveAPIViewTestCase(APITestCase):
     def setUp(self):
         self.post1 = Post.objects.create(title='post1')
         self.post2 = Post.objects.create(title='post2')
-        self.user = User.objects.create(username='user')
+        self.user = Profile.objects.create(username='user')
         self.url = reverse('post-detail', args={self.post1.id})
 
     def test_get_authenticated(self):
@@ -30,7 +29,7 @@ class PostRetrieveAPIViewTestCase(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
 
     def test_delete_staff_authenticated(self):
-        user1 = User.objects.create(username='user1', is_staff=True)
+        user1 = Profile.objects.create(username='user1', is_staff=True)
         self.client.force_authenticate(user1)
         response = self.client.delete(self.url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
@@ -41,7 +40,7 @@ class PostRetrieveAPIViewTestCase(APITestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_delete_owner(self):
-        user2 = User.objects.create(username='user2')
+        user2 = Profile.objects.create(username='user2')
         post3 = Post.objects.create(title='post3', author=user2)
         url = reverse('post-detail', args={post3.id})
         self.client.force_authenticate(user2)
@@ -54,7 +53,7 @@ class PostRetrieveAPIViewTestCase(APITestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_patch_is_staff(self):
-        user1 = User.objects.create(username='user1', is_staff=True)
+        user1 = Profile.objects.create(username='user1', is_staff=True)
         self.client.force_authenticate(user1)
         data = {
             'title': 'tested'
@@ -67,7 +66,7 @@ class PostRetrieveAPIViewTestCase(APITestCase):
         self.assertEqual(expected_data, response.data)
 
     def test_patch_owner(self):
-        user = User.objects.create(username='user2')
+        user = Profile.objects.create(username='user2')
         post = Post.objects.create(title='test', author=user)
         self.client.force_authenticate(user)
         url = reverse('post-detail', args={post.id})
@@ -86,7 +85,7 @@ class AllPostsAPIViewTestCase(APITestCase):
     def setUp(self):
         self.post1 = Post.objects.create(title='post1')
         self.post2 = Post.objects.create(title='post2')
-        self.user = User.objects.create(username='user')
+        self.user = Profile.objects.create(username='user')
         self.url = reverse('posts')
 
     def test_get_unauth(self):
@@ -105,7 +104,7 @@ class AllPostsAPIViewTestCase(APITestCase):
 
 class CreatePostAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.user = User.objects.create(username='user')
+        self.user = Profile.objects.create(username='user')
         self.url = reverse('post-create')
         self.data = {"title": "title",
                      "post_content":

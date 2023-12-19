@@ -1,22 +1,20 @@
 import json
 from collections import OrderedDict
 
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test import TestCase
 
 from rest_framework import status
 from rest_framework.test import force_authenticate, APITestCase
 
-from wok.userprofile.serializers import ProfileSerializer
-from wok.userprofile.models import Profile
+from userprofile.serializers import ProfileSerializer
+from userprofile.models import Profile
 
 
 class GetProfileAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.user1 = User.objects.create(username='user1')
-        self.user2 = User.objects.create(username='user2')
-        self.profile = Profile.objects.get(user=self.user1)
+        self.user1 = Profile.objects.create(username='user1')
+        self.user2 = Profile.objects.create(username='user2')
 
     def test_get_profile_unauthorized(self):
         url = reverse('profile', args=(self.user1.id,))
@@ -27,30 +25,29 @@ class GetProfileAPIViewTestCase(APITestCase):
         self.client.force_authenticate(self.user2)
         url = reverse('profile', args=(self.user1.id,))
         response = self.client.get(url)
-        serializer_data = ProfileSerializer(self.profile).data
+        serializer_data = ProfileSerializer(self.user1).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
 
     def test_get_profile_staff(self):
-        user3 = User.objects.create(username='user3', is_staff=True)
+        user3 = Profile.objects.create(username='user3', is_staff=True)
         self.client.force_authenticate(user3)
         url = reverse('profile', args=(self.user1.id,))
         response = self.client.get(url)
-        serializer_data = ProfileSerializer(self.profile).data
+        serializer_data = ProfileSerializer(self.user1).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
 
 
 class GetMyProfileAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.user1 = User.objects.create(username='user1')
-        self.profile = Profile.objects.get(user=self.user1)
+        self.user1 = Profile.objects.create(username='user1')
         self.url = reverse('my-profile')
 
     def test_get_my_profile_authorized(self):
         self.client.force_authenticate(self.user1)
         self.response = self.client.get(self.url)
-        serializer_data = ProfileSerializer(self.profile).data
+        serializer_data = ProfileSerializer(self.user1).data
         self.assertEqual(status.HTTP_200_OK, self.response.status_code)
         self.assertEqual(serializer_data, self.response.data)
 
@@ -62,7 +59,7 @@ class GetMyProfileAPIViewTestCase(APITestCase):
         self.client.force_authenticate(self.user1)
         response = self.client.delete(self.url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, User.objects.all().count())
+        self.assertEqual(0, Profile.objects.all().count())
 
     def test_patch_my_profile(self):
         # self.client.force_authenticate(self.user1)
@@ -76,16 +73,16 @@ class GetMyProfileAPIViewTestCase(APITestCase):
         pass
 
     def test_get_my_profile_staff(self):
-        staff = User.objects.create(username='staff', is_staff=True)
+        staff = Profile.objects.create(username='staff', is_staff=True)
         self.client.force_authenticate(staff)
         response = self.client.get(self.url)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual({'avatar': None, 'user': 'staff'}, response.data)
+        self.assertEqual({'avatar': None, 'username': 'staff'}, response.data)
 
 
 class ChangePasswordAPIViewTestCase(APITestCase):
     def setUp(self):
-        self.user1 = User.objects.create(username='user1')
+        self.user1 = Profile.objects.create(username='user1')
         self.user1.set_password('string')
         self.url = reverse('password-update')
         self.data = {
@@ -117,7 +114,7 @@ class ChangePasswordAPIViewTestCase(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_change_password_staff(self):
-        user = User.objects.create(username='staff', is_staff=True)
+        user = Profile.objects.create(username='staff', is_staff=True)
         user.set_password('string')
         self.client.force_authenticate(user)
         response = self.client.post(self.url, data=self.json_data, content_type='application/json')

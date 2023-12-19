@@ -2,18 +2,18 @@ from collections import OrderedDict
 
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 
 from rest_framework import status
 
 from posts.models import Post, PostContent
 from posts.serializers import PostContentSerializer, PostSerializer, AllPostsSerializer, CreatePostSerializer
+from userprofile.models import Profile
 
 
 class PostContentSerializerTestCase(TestCase):
     def test_post_content_create(self):
         post = Post.objects.create(title='тестовый')
-        user = User.objects.create(username='user')
+        user = Profile.objects.create(username='user')
         # self.client.force_login(user)
         post_conten1 = PostContent(text='post_content1', post=post)
         post_conten2 = PostContent(text='post_content2', post=post)
