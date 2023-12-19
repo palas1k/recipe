@@ -1,24 +1,27 @@
-# Create your views here.
-from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse
+from django.shortcuts import redirect, get_object_or_404
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from follow_likes.models import Follower
-
-# def follow_check(request, subscribe):
-#     '''Проверка подписан ли человек'''
-#     user = request.user
-#     try:
-#         User.objects.get(user=user, subscribe=subscribe)
-#         Follower.unfollow()
-#     except:
-#         Follower.follow()
-#     return redirect('home')
 from userprofile.models import Profile
+from userprofile.serializers import ProfileSerializer
 
 
-def follow(request, pk):
-    """User кто подписывается, subscribe на кого подписываются"""
-    user = request.user.profile
-    follow_to = get_object_or_404(Profile, pk=pk)
-    Follower.objects.create(user=user, subscribe=follow_to)
-    return redirect('profile-view', pk=follow_to.id)
+class FollowAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, pk):
+        Follower.objects.create(user=request.user, subscribe_id=pk)
+        user = Profile.objects.get(pk=pk)
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk):
+        folow = get_object_or_404(Follower, subscribe_id=pk)
+        user = Profile.objects.get(pk=pk)
+        folow.delete()
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+

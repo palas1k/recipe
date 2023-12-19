@@ -19,24 +19,13 @@ class Follower(models.Model):
     def __str__(self):
         return f'{self.user} подписан на {self.subscribe}'
 
-    def follow(self):
-        id = self.kwargs['pk']
-        # subscribe = Profile.objects.get(pk=id)
-        Follower.objects.create(user=id, subscribe=self.user)
-
-    def unfollow(self, user, subscribe):
-        follower = Follower.objects.get(user=user, subscribe=subscribe)
-        follower.delete()
-
-    def follow_check(request, subscribe):
+    def follow_check(request, pk):
         '''Проверка подписан ли человек'''
-        user = request.user
         try:
-            User.objects.get(user=user, subscribe=subscribe)
-            Follower.unfollow()
+            User.objects.get(user=request.user, subscribe_id=pk)
+            return True
         except:
-            Follower.follow()
-        return redirect('profile-view')
+            return False
 
 
 class Like(models.Model):

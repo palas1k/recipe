@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from comments.serializers import CommentsSerializer
+from posts.tasks import count_comments
 from userprofile.models import Profile
 from .models import Comments
 from posts.models import Post
@@ -44,6 +45,7 @@ class CommentsRetrieveAPIView(APIView):
     def delete(self, request, comment_pk):
         comment = get_object_or_404(Comments, pk=comment_pk)
         comment.delete()
+        count_comments.delay(comment.post.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, comment_pk):
