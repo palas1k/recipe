@@ -31,7 +31,6 @@ def test_get_comments_list(auth, client, post, url):
     assert 3 == len(response.data)
 
 
-
 def test_post_unauth(post, url, client):
     response = client.post(url)
     assert 401 == response.status_code
@@ -56,8 +55,24 @@ def test_post_wrong_fields(auth, client, url):
     response = client.post(url, data)
     assert 400 == response.status_code
 
+
 def test_post_empty(auth, client, url):
     data = {}
     response = client.post(url, data)
     assert 400 == response.status_code
 
+
+def test_update(auth, client):
+    comment = baker.make(Comments, text='before_update')
+    data = {
+        'text': 'after_update'
+    }
+    url = f"/api/v1/comments/{comment.pk}/"
+    response = client.patch(url, data, format='json')
+    assert data['text'] == response.data['text']
+
+
+def test_delete(auth, client, comment):
+    url = f"/api/v1/comments/{comment.pk}/"
+    response = client.delete(url)
+    assert 204 == response.status_code
