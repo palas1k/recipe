@@ -20,7 +20,7 @@ class CommentsAPIView(APIView):
         return Response(CommentsSerializer(comments, many=True).data, status=status.HTTP_200_OK)
 
     def post(self, request, pk, **kwargs):
-        _user = Profile.objects.get(user=request.user)
+        _user = Profile.objects.get(pk=request.user.pk)
         serializer = CommentsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(

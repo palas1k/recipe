@@ -19,6 +19,10 @@ def client():
 def testuser():
     return Profile.objects.create(username='user1')
 
+@pytest.fixture()
+def auth(testuser, client):
+    return client.force_authenticate(testuser)
+
 
 @pytest.fixture()
 def post():
