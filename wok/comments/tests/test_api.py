@@ -60,3 +60,4 @@ def test_post_empty(auth, client, url):
     data = {}
     response = client.post(url, data)
     assert 400 == response.status_code
+
